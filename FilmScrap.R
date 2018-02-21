@@ -9,6 +9,7 @@ rm(list = ls())
 library(xml2)
 library(rvest)
 
+
 #Desired webpage for reference is IMDb:
 url <- 'http://www.imdb.com/list/ls066522530/'
 
@@ -19,8 +20,7 @@ webpage <- read_html(url)
 # ---> The process: Using CSS selectors to: Scrap particular information + Convert to Text
 
 #Ranking---------------------------------------------------
-rank_data_html <- html_nodes(webpage, '.ratings-imdb-rating strong')
-rank_data <- html_text(rank_data_html)
+rank_data <- html_nodes(webpage, '.ratings-imdb-rating strong') %>% html_text()
 head(rank_data)
 
 
@@ -30,24 +30,21 @@ str(rank_data)
 
 
 #--Title---------------------------------------------------
-title_data_html <- html_nodes(webpage, '.lister-item-header a')
-title_data <- html_text(title_data_html)
+title_data<- html_nodes(webpage, '.lister-item-header a') %>% html_text()
 head(title_data)
 
 
 #Description ---------------------------------------------------
-description_data_html <- html_nodes(webpage, '.ratings-bar+ p')
-description_data <- html_text(description_data_html)
+description_data <- html_nodes(webpage, '.ratings-bar+ p') %>% html_text()
 head(description_data)
 
 #Removing '\n'
-description_data <- gsub("\n","", description_data)
+description_data <- gsub("\n","", description_data) %>% html_text()
 head(description_data)
 
 
 #Runtime-------------------------------------------------
-runtime_data_html <- html_nodes(webpage, '.runtime')
-runtime_data <- html_text(runtime_data_html)
+runtime_data <- html_nodes(webpage, '.runtime') %>% html_text()
 head(runtime_data)
 
 #Removing min + making numerical
@@ -57,8 +54,7 @@ str(runtime_data)
 
 
 #Genre---------------------------------------------------
-genre_data_html <- html_nodes(webpage, '.genre')
-genre_data <- html_text(genre_data_html)
+genre_data <- html_nodes(webpage, '.genre') %>% html_text()
 head(genre_data)
 
 #Remove '\n'
@@ -78,8 +74,7 @@ head(genre_data)
 #Metascore-----------------------------------------------
 # 21 missing Metascore from 80 films. Will mute for now.
 
-#metascore_data_html <- html_nodes(webpage, '.favorable')
-#metascore_data <- html_text(metascore_data_html)
+#metascore_data <- html_nodes(webpage, '.favorable') %>% html_text()
 #head(metascore_data)
 
 #Removing '\n and excess ""
@@ -89,8 +84,7 @@ head(genre_data)
 
 
 #Votes----------------------------------------------------
-votes_data_html <- html_nodes(webpage, '.text-muted+ span:nth-child(2)')
-votes_data <- html_text(votes_data_html)
+votes_data <- html_nodes(webpage, '.text-muted+ span:nth-child(2)') %>% html_text()
 head(votes_data)
 
 #Removing ","
@@ -104,27 +98,23 @@ votes_data <- votes_data[-c(1,2,3)]
 
 #Gross Earning in Mil-------------------------------------
 # 11 missing rows because there is no information in IMDB --will mute for now. 
-#gross_data_html <- html_nodes(webpage, '.text-muted .ghost~ .text-muted+ span')
-#gross_data <- html_text(gross_data_html)
+#gross_data <- html_nodes(webpage, '.text-muted .ghost~ .text-muted+ span') %>% html_text()
 #head(gross_data)
 
 #Removing '$' and 'M' signs
-#gross_data <- gsub("M","",gross_data)
-#gross_data <- substring(gross_data,2,6)
+#gross_data <- gsub("M","",gross_data) %>% html_text()
 #head(gross_data)
 #gross_data <- as.numeric(gross_data)
 #str(gross_data)
 
 
 #Director--------------------------------------------------
-director_data_html <- html_nodes(webpage, '.text-muted a:nth-child(1)')
-director_data <- html_text(director_data_html)
+director_data <- html_nodes(webpage, '.text-muted a:nth-child(1)') %>% html_text()
 head(director_data)
 
 
 #Stars-----------------------------------------------------
-stars_data_html <- html_nodes(webpage, '.lister-item-content .ghost+ a')
-stars_data <- html_text(stars_data_html)
+stars_data <- html_nodes(webpage, '.lister-item-content .ghost+ a') %>% html_text()
 head(stars_data)
 
 
